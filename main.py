@@ -7,7 +7,6 @@ from src.components.navbar import create_navbar
 from config import CONFIG
 from src.utils.clean_data import clean_data
 from src.utils.get_data import get_cleaned_data
-
 # Initialisation de l'application
 app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
 server = app.server
@@ -37,7 +36,6 @@ def display_page(pathname):
 # Lancement du serveur
 if __name__ == '__main__':
     d = get_cleaned_data()
-    print(d)
     app.run_server(
         host=CONFIG['APP_HOST'],
         port=CONFIG['APP_PORT'],
