@@ -11,6 +11,7 @@
    ```bash
    git clone https://github.com/AdrienB23/DataProject.git
    cd DataProject
+   .\.env\Scripts\activate
    ```
 
 2. Créer un environnement virtuel

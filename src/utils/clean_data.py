@@ -1,6 +1,6 @@
 import pandas as pd
 from config import CONFIG
-from src.utils.get_data import get_raw_data
+from src.utils.get_data import get_raw_data, get_cleaned_data
 
 
 def clean_data():
@@ -76,3 +76,6 @@ def clean_data():
             sep=';',
             index=False,
             encoding='utf-8')
+
+if __name__ == "__main__":
+    clean_data()
