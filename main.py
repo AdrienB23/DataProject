@@ -35,8 +35,6 @@ def display_page(pathname):
 
 # Lancement du serveur
 if __name__ == '__main__':
-    breakpoint()
-    clean_data()
     app.run_server(
         host=CONFIG['APP_HOST'],
         port=CONFIG['APP_PORT'],
