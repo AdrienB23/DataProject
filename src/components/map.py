@@ -1,12 +1,12 @@
-import dash
 from dash import dcc, html
 import plotly.express as px
+
 from src.utils.get_data import get_cleaned_data
 from src.utils.map_functions import get_temperature_by_department
 
 # Fonction pour créer une carte centrée sur la France
-def create_map():
-    df = get_temperature_by_department(get_cleaned_data())
+def create_map(df):
+    df = get_temperature_by_department(df)
     # Création de la figure avec Plotly
     return html.Div([
         html.H1("Carte Choroplèthe des Températures Moyennes par Département"),
