@@ -19,10 +19,6 @@ server = app.server
 def display_page(pathname):
     if pathname == '/':
         return home.layout
-    elif pathname == '/about':
-        return about.layout
-    elif pathname == '/simple':
-        return simple_page.layout
     else:
         return '404 - Page non trouvée'
 

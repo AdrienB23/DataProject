@@ -4,9 +4,8 @@ from src.components.footer import create_footer
 from src.components.map import create_map
 from src.components.graphs.temperature import create_graph
 from src.utils.get_data import get_cleaned_data
-
 df = get_cleaned_data()
-
+from src.pages.simple_page import simple_page
 layout = html.Div([
     create_header(),
     html.Div([
