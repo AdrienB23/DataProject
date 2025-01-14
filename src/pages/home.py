@@ -2,6 +2,7 @@ from dash import html, dcc
 from src.components.header import create_header
 from src.components.footer import create_footer
 from src.components.map import create_map
+from src.pages.simple_page import simple_page
 
 layout = html.Div([
     create_header(),
@@ -10,5 +11,6 @@ layout = html.Div([
         html.P("Sélectionnez une pages dans la navigation pour commencer.")
     ]),
     create_map(),
+    simple_page(),
     create_footer()
 ])
