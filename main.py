@@ -6,6 +6,7 @@ from src.pages import home, about, simple_page
 from src.components.navbar import create_navbar
 from config import CONFIG
 from src.utils.clean_data import clean_data
+from src.utils.get_data import get_cleaned_data
 from src.utils.get_data import get_raw_data
 from src.components.graphs.temperature import create_temperature
 import pandas as pd
@@ -32,7 +33,7 @@ def display_page(pathname):
 
 # Lancement du serveur
 if __name__ == '__main__':
-    df = get_raw_data()
+    d = get_cleaned_data()
     temp = create_temperature(df, "Occitanie")
     # Layout principal
     app.layout = html.Div([
