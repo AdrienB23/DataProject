@@ -26,3 +26,47 @@ def create_global_temperature(df):
 
     fig = go.Figure(data=data, layout=layout)
     return fig
+
+def create_rainfall_region(df):
+    regions_metropolitan = [
+        "Auvergne-Rhône-Alpes", "Bourgogne-Franche-Comté", "Bretagne",
+        "Centre-Val de Loire", "Corse", "Grand Est", "Hauts-de-France",
+        "Île-de-France", "Normandie", "Nouvelle-Aquitaine", "Occitanie",
+        "Pays de la Loire", "Provence-Alpes-Côte d'Azur"
+    ]
+
+    df["Catégorie Région"] = df["region (name)"].apply(
+        lambda x: "Régions Métropolitaines" if x in regions_metropolitan else x
+    )
+
+    if df["Date"].isnull().any():
+        raise ValueError("Certaines valeurs dans la colonne 'Date' ne peuvent pas être converties en datetime.")
+    df["Année"] = df["Date"].dt.year
+
+    rain_avg_per_year = (
+        df.groupby(["Année", "Catégorie Région"])["Précipitations dans les 24 dernières heures"]
+        .mean()
+        .reset_index()
+    )
+
+    traces = [] 
+    for category, data in rain_avg_per_year.groupby("Catégorie Région"):
+        trace = go.Scatter(
+            x=data["Année"],
+            y=data["Précipitations dans les 24 dernières heures"],
+            mode="lines+markers",
+            name="",
+            hovertemplate="<b>Catégorie : %{text}</b><br>Année : %{x}<br>Précipitations : %{y:.1f} mm",
+            text=data["Catégorie Région"]
+        )
+        traces.append(trace)    
+
+    layout = go.Layout(
+        title={"text" : "Moyenne des précipitations annuelles par catégorie", "x": 0.5},
+        xaxis={"title" : {"text" : "Date"}},
+        yaxis={"title" : {"text" : "Précipitation (mm)"}},
+    )
+
+    fig = go.Figure(data=traces, layout=layout)
+    return fig
+    

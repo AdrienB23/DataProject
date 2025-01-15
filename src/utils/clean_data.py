@@ -1,7 +1,10 @@
-import pandas as pd
-from config import CONFIG
-from src.utils.get_data import get_raw_data, get_cleaned_data
+import sys
+import os
 
+# Ajoute le répertoire racine au chemin de recherche
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
+
+from src.utils.get_data import get_raw_data, get_cleaned_data 
 
 def clean_data():
     """Nettoie les données brutes et les sauvegarde"""
@@ -56,7 +59,6 @@ def clean_data():
              'Précipitations dans les 3 dernières heures',
              'Précipitations dans les 6 dernières heures',
              'Précipitations dans les 12 dernières heures',
-             'Précipitations dans les 24 dernières heures',
              'Altitude',
              "Température minimale sur 12 heures",
              "Température minimale sur 24 heures",
