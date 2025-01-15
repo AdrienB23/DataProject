@@ -1,7 +1,7 @@
 from dash import dcc, html
 from src.utils.graphs_functions import create_global_temperature
 
-def create_graph(df):
+def create_temperature_graph(df):
     fig = create_global_temperature(df)
     # Création de la figure avec Plotly
     return html.Div([
