@@ -12,9 +12,3 @@ def year_slider():
         ),
         html.Div(id='slider-output-container'),
     ])
-
-@callback(
-    Output('slider-output-container', 'children'),
-    Input('slider-year', 'value'))
-def update_output(value):
-    return 'You have selected "{}"'.format(value)
