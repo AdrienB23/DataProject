@@ -85,9 +85,9 @@ if __name__ == "__main__":
         print("\nStatistiques globales:")
         print(f"Température moyenne nationale : {result['Température Moyenne (°C)'].mean():.2f}°C")
         print(f"Région la plus chaude : {result.loc[result['Température Moyenne (°C)'].idxmax(), 'Région']} "
-              f"({result['Température Maximum (°C)'].max():.2f}°C)")
+            f"({result['Température Maximum (°C)'].max():.2f}°C)")
         print(f"Région la plus froide : {result.loc[result['Température Moyenne (°C)'].idxmin(), 'Région']} "
-              f"({result['Température Minimum (°C)'].min():.2f}°C)")
+            f"({result['Température Minimum (°C)'].min():.2f}°C)")
 
     except Exception as e:
         print(f"Erreur lors de l'analyse : {str(e)}")
