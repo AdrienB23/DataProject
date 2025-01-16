@@ -2,12 +2,14 @@ import dash
 from dash import html, dcc
 from dash.dependencies import Input, Output
 
-from src.pages import home, about, simple_page
+from src.pages import home
 from src.components.navbar import create_navbar
 from config import CONFIG
+from src.utils.clean_data import clean_data
 
 # Initialisation de l'application
 app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
+app.config['suppress_callback_exceptions'] = True
 server = app.server
 
 # Callback pour la navigation
