@@ -1,6 +1,8 @@
 import sys
 import os
 
+from config import CONFIG
+
 # Ajoute le répertoire racine au chemin de recherche
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
@@ -72,7 +74,7 @@ def clean_data():
              "Temps présent.1",
 
              ], axis=1, inplace=True)
-    output_file = "data\\cleaned\\clean_data.csv"
+    output_file = CONFIG['DATA_PATH']['CLEANED']
 
     df.to_csv(output_file,
             sep=';',
