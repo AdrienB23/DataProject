@@ -69,25 +69,14 @@ if __name__ == "__main__":
     print("=" * 80)
 
     # Récupération et analyse des données
-    try:
-        data = get_cleaned_data()
-        result = get_temperature_by_region(data, YEAR)
 
-        # Affichage des résultats
-        print(f"\nNombre total de régions analysées : {len(result)}")
-        print(f"Colonnes disponibles : {', '.join(result.columns)}")
-        print("\nRésultats par région :")
-        print("-" * 80)
-        print(result.to_string(index=False))
-        print("-" * 80)
+    data = get_cleaned_data()
+    result = get_temperature_by_region(data, YEAR)
 
-        # Statistiques globales
-        print("\nStatistiques globales:")
-        print(f"Température moyenne nationale : {result['Température Moyenne (°C)'].mean():.2f}°C")
-        print(f"Région la plus chaude : {result.loc[result['Température Moyenne (°C)'].idxmax(), 'Région']} "
-            f"({result['Température Maximum (°C)'].max():.2f}°C)")
-        print(f"Région la plus froide : {result.loc[result['Température Moyenne (°C)'].idxmin(), 'Région']} "
-            f"({result['Température Minimum (°C)'].min():.2f}°C)")
-
-    except Exception as e:
-        print(f"Erreur lors de l'analyse : {str(e)}")
+    # Affichage des résultats
+    print(f"\nNombre total de régions analysées : {len(result)}")
+    print(f"Colonnes disponibles : {', '.join(result.columns)}")
+    print("\nRésultats par région :")
+    print("-" * 80)
+    print(result.to_string(index=False))
+    print("-" * 80)

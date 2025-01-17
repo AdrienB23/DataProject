@@ -7,7 +7,7 @@ CONFIG = {
         'CLEANED': os.path.join(BASE_DIR, 'data', 'cleaned', 'clean_data.csv')
     },
     'GEO_JSON': {
-        'REGIONS': os.path.join(BASE_DIR, 'data', 'raw', 'regions.geojson'),
+        'REGIONS': os.path.join(BASE_DIR, 'data', 'raw', 'regions.geojson')
     },
     'APP_HOST': '127.0.0.1',
     'APP_PORT': 8050
