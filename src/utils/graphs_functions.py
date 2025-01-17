@@ -83,6 +83,7 @@ def create_rainfall_graph(df):
         title={"text" : "Moyenne des précipitations annuelles par catégorie", "x": 0.5},
         xaxis={"title" : {"text" : "Date"}},
         yaxis={"title" : {"text" : "Précipitation (mm)"}},
+        template="plotly_white",
     )
 
     fig = go.Figure(data=traces, layout=layout)

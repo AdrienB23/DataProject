@@ -80,8 +80,8 @@ def temperature_min_max_year(data, year, region):
     temp_max = working_data.loc[idx_max, 'Température (°C)']
 
     # Récupérer les informations de localisation
-    loc_min = f"{working_data.loc[idx_min, 'communes (name)']} ({working_data.loc[idx_min, 'region (name)']})"
-    loc_max = f"{working_data.loc[idx_max, 'communes (name)']} ({working_data.loc[idx_max, 'region (name)']})"
+    loc_min = f"{working_data.loc[idx_min, 'region (name)']}"
+    loc_max = f"{working_data.loc[idx_max, 'region (name)']}"
 
     return (temp_min, loc_min), (temp_max, loc_max)
 

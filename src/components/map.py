@@ -7,6 +7,7 @@ import plotly.express as px
 from config import CONFIG
 from src.components.create_loading import create_loading
 from src.components.dropdown_dom_tom import create_dropdown_tom_tom
+from src.components.indicators import create_indicators
 from src.components.year_slider import year_slider
 from src.utils.map_functions import get_temperature_by_region
 from src.utils.data_loader import df_cleaned
@@ -26,7 +27,13 @@ def create_map_layout():
             html.H1("Carte Choroplèthe des Températures Moyennes par Régions"),
             year_slider(),
             create_dropdown_tom_tom(),
-            create_loading("loading-map", "temperature-map")
+            html.Div(
+                className="map-container",
+                children=[
+                    create_loading("loading-map", "temperature-map"),
+                    create_indicators()
+                ]
+            ),
         ]
     )
 

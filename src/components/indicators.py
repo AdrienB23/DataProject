@@ -1,30 +1,47 @@
 from dash import dcc, html, callback, Output, Input
-
 from src.utils.indicators_functions import temperature_min_max_year
+from src.utils.data_loader import df_cleaned
 
-df_global = None
-def create_indicators(df):
-    global df_global
-    df_global = df
+def create_indicators():
     return html.Div(
-        className="component-container",
+        className="indicator-container",
         children=[
-            "Temperature Max",
-            dcc.Loading(
-                id="loading-max",
-                type="dot",
+            html.Div(
+                className="indicator-elem",
                 children=[
-                    html.H2(id='temp-max'),
-                    html.H4(id='temp-max-loc'),
+                    html.H3("Temperature Max"),
+                    dcc.Loading(
+                        id="loading-max",
+                        type="dot",
+                        children=[
+                            html.Div(
+                                className="result-container",
+                                children=[
+                                    html.H2(id='temp-max'),
+                                    html.H4(id='temp-max-loc'),
+                                ]
+                            )
+                        ]
+                    ),
                 ]
             ),
-            "Temperature Min",
-            dcc.Loading(
-                id="loading-max",
-                type="dot",
+            html.Div(
+                className="indicator-elem",
                 children=[
-                    html.H2(id='temp-min'),
-                    html.H4(id='temp-min-loc'),
+                    html.H3("Temperature Min"),
+                    dcc.Loading(
+                        id="loading-max",
+                        type="dot",
+                        children=[
+                            html.Div(
+                                className="result-container",
+                                children=[
+                                    html.H2(id='temp-min'),
+                                    html.H4(id='temp-min-loc'),
+                                ]
+                            )
+                        ]
+                    )
                 ]
             )
         ]
@@ -43,11 +60,11 @@ def create_indicators(df):
     ]
 )
 def update_indicators(selected_year, selected_region):
-    if not selected_year or not selected_region or df_global is None:
+    if not selected_year or not selected_region or df_cleaned is None:
         return "N/A", "N/A"
 
     try:
-        (temp_min, loc_min), (temp_max, loc_max) = temperature_min_max_year(df_global, selected_year,
+        (temp_min, loc_min), (temp_max, loc_max) = temperature_min_max_year(df_cleaned, selected_year,
                                                                             selected_region)
         # Formatage des résultats
         max_text = f"{temp_max:.1f}°C"
