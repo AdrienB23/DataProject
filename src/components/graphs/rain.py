@@ -1,9 +1,11 @@
-from dash import dcc, html
-from src.utils.graphs_functions import create_rainfall_region
+from dash import html, dcc
+from src.components.create_loading import create_loading
+from src.utils.data_loader import df_cleaned
+from src.utils.graphs_functions import create_rainfall_graph
 
-def create_rainfall_graph(df):
+def create_rainfall_layout():
     """
-    Generates a graph of average yearly rainfall by region
+    Generates a layout of average yearly rainfall by region
 
     Parameters:
         df (pd.DataFrame): DataFrame containing rainfall data with a column named
@@ -12,7 +14,7 @@ def create_rainfall_graph(df):
     Returns:
         html.Div: A Dash HTML Div containing the graph and title.
     """
-    fig = create_rainfall_region(df)
+    fig = create_rainfall_graph(df_cleaned)
     return html.Div(
         className="component-container",
         children=[

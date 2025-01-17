@@ -4,7 +4,9 @@ from main import app
 
 
 def create_dropdown_tom_tom():
-    return html.Div([
-        dcc.Dropdown(['France Métropolitaine', 'Guadeloupe', 'Guyane', 'La Réunion', 'Martinique'], 'France Métropolitaine', id='country-dropdown'),
-        html.Div(id='dd-output-container')
-    ])
+    return html.Div(
+        className="dropdown",
+        children=[
+            dcc.Dropdown(['France Métropolitaine', 'Guadeloupe', 'Guyane', 'La Réunion', 'Martinique'], 'France Métropolitaine', id='country-dropdown'),
+        ]
+    )

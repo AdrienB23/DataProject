@@ -15,14 +15,14 @@ main {
     padding: 20px;
     box-shadow: 5px 5px 5px 0px rgba(32, 43, 54, 0.15);
     width: 100%;
-}
-
-.temp-container {
-    display: flex;
-    column-gap: 50px;
+    row-gap: 30px;
 }
 
 .temp-graph {
     display: flex;
     flex-direction: column;
+}
+
+.dropdown {
+    width: 250px;
 }

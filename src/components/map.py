@@ -5,13 +5,14 @@ from dash import dcc, html, callback, Output, Input
 import plotly.express as px
 
 from config import CONFIG
+from src.components.create_loading import create_loading
 from src.components.dropdown_dom_tom import create_dropdown_tom_tom
 from src.components.year_slider import year_slider
 from src.utils.map_functions import get_temperature_by_region
+from src.utils.data_loader import df_cleaned
 
-df_global = None
 # Fonction pour créer une carte centrée sur la France
-def create_map_layout(df):
+def create_map_layout():
     """
     Crée la mise en page de la carte avec un slider d'année.
     Parameters:
@@ -19,22 +20,13 @@ def create_map_layout(df):
     Returns:
         html.Div: Composant Dash contenant le slider et la carte.
     """
-    global df_global
-    df_global = df
     return html.Div(
         className="component-container",
         children=[
             html.H1("Carte Choroplèthe des Températures Moyennes par Régions"),
             year_slider(),
             create_dropdown_tom_tom(),
-            dcc.Loading(
-                id="loading-map",
-                type="dot",
-                children=[
-                    dcc.Graph(id='temperature-map')  # Placeholder pour la carte
-                ],
-                fullscreen=False,
-            )
+            create_loading("loading-map", "temperature-map")
         ]
     )
 
@@ -58,7 +50,7 @@ def update_map(selected_year, selected_region):
 
     """
     # Filtrer les données en fonction de l'année
-    filtered_df = get_temperature_by_region(df_global , selected_year)
+    filtered_df = get_temperature_by_region(df_cleaned , selected_year)
     filtered_df['Code Région'] = filtered_df['Code Région'].apply(lambda x: f"{int(x):02}")
     region_config = {
         "France Métropolitaine": {
