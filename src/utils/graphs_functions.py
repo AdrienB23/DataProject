@@ -1,16 +1,33 @@
 import plotly.graph_objects as go
 import pandas as pd
+from src.utils.data_loader import df_cleaned
 
-def create_global_temperature(df):
+def create_global_temperature(df, max):
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce", utc=True)
     if df["Date"].isnull().any():
         raise ValueError("Certaines valeurs dans la colonne 'Date' ne peuvent pas être converties en datetime.")
+    df["Année"] = df["Date"].dt.year
     df["Jour"] = df["Date"].dt.date
+
     temperature_avg_per_day = df.groupby("Jour")["Température (°C)"].mean().reset_index()
+    temperature_avg_per_day["Année"] = pd.to_datetime(temperature_avg_per_day["Jour"]).dt.year
+    
+    if max:
+        temperature_extreme_per_year = (
+            temperature_avg_per_day.groupby("Année")["Température (°C)"]
+            .max()
+            .reset_index()
+        )
+    else:
+        temperature_extreme_per_year = (
+            temperature_avg_per_day.groupby("Année")["Température (°C)"]
+            .min()
+            .reset_index()
+        )
     trace = go.Scatter(
-        x=temperature_avg_per_day["Jour"], 
-        y=temperature_avg_per_day["Température (°C)"],
-        mode="lines",
+        x=temperature_extreme_per_year["Année"], 
+        y=temperature_extreme_per_year["Température (°C)"],
+        mode="markers+lines",
         name="",
         hovertemplate="<b>Température %{y:.1f}°C</b><br>" + 
             "Date : %{x}"
@@ -27,7 +44,7 @@ def create_global_temperature(df):
     fig = go.Figure(data=data, layout=layout)
     return fig
 
-def create_rainfall_region(df):
+def create_rainfall_graph(df):
     regions_metropolitan = [
         "Auvergne-Rhône-Alpes", "Bourgogne-Franche-Comté", "Bretagne",
         "Centre-Val de Loire", "Corse", "Grand Est", "Hauts-de-France",
@@ -38,7 +55,8 @@ def create_rainfall_region(df):
     df["Catégorie Région"] = df["region (name)"].apply(
         lambda x: "Régions Métropolitaines" if x in regions_metropolitan else x
     )
-
+    
+    df["Date"] = pd.to_datetime(df["Date"], errors="coerce", utc=True)
     if df["Date"].isnull().any():
         raise ValueError("Certaines valeurs dans la colonne 'Date' ne peuvent pas être converties en datetime.")
     df["Année"] = df["Date"].dt.year

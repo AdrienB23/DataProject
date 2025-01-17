@@ -24,7 +24,7 @@ def get_temperature_by_region(data, year=None):
     work_data = data.copy()
 
     # Convertir la colonne Date en datetime une seule fois
-    work_data['Date'] = pd.to_datetime(work_data['Date'], errors='coerce')
+    work_data['Date'] = pd.to_datetime(work_data['Date'], errors='coerce', utc=True)
 
     # Extraire l'année de manière plus efficace
     work_data['Année'] = work_data['Date'].dt.year
