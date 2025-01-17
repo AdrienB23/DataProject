@@ -26,6 +26,7 @@ def create_map_layout(df):
         children=[
             html.H1("Carte Choroplèthe des Températures Moyennes par Régions"),
             year_slider(),
+            create_dropdown_tom_tom(),
             dcc.Loading(
                 id="loading-map",
                 type="dot",
