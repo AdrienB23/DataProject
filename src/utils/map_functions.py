@@ -80,5 +80,3 @@ if __name__ == "__main__":
     print("-" * 80)
     print(result.to_string(index=False))
     print("-" * 80)
-
-

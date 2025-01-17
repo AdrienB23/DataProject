@@ -3,9 +3,7 @@ from dash import html, dcc
 from dash.dependencies import Input, Output
 
 from src.pages import home
-from src.components.navbar import create_navbar
 from config import CONFIG
-from src.utils.clean_data import clean_data
 
 # Initialisation de l'application
 app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
@@ -28,7 +26,6 @@ def display_page(pathname):
 if __name__ == '__main__':
     # Layout principal
     app.layout = html.Div([
-        create_navbar(),
         dcc.Location(id='url', refresh=False),
         html.Div(id='page-content'),
     ])

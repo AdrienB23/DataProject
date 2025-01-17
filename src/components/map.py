@@ -21,19 +21,21 @@ def create_map_layout(df):
     """
     global df_global
     df_global = df
-    return html.Div([
-        html.H1("Carte Choroplèthe des Températures Moyennes par Régions"),
-        year_slider(),
-        create_dropdown_tom_tom(),
-        dcc.Loading(
-            id="loading-map",
-            type="dot",
-            children=[
-                dcc.Graph(id='temperature-map')  # Placeholder pour la carte
-            ],
-            fullscreen=False,
-        )
-    ])
+    return html.Div(
+        className="component-container",
+        children=[
+            html.H1("Carte Choroplèthe des Températures Moyennes par Régions"),
+            year_slider(),
+            dcc.Loading(
+                id="loading-map",
+                type="dot",
+                children=[
+                    dcc.Graph(id='temperature-map')  # Placeholder pour la carte
+                ],
+                fullscreen=False,
+            )
+        ]
+    )
 
 
 # Callback pour mettre à jour la carte
