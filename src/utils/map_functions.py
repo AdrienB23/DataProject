@@ -4,7 +4,7 @@ import pandas as pd
 from src.utils.indicators_functions import check_required_columns
 
 
-def get_temperature_by_region(data, year=None):
+def get_temperature_by_region(data, year=None) -> pd.DataFrame:
     """
     Calculates the average temperatures by region for a given year.
 
@@ -35,7 +35,7 @@ def get_temperature_by_region(data, year=None):
     return result
 
 
-def calculate_temperature_statistics(work_data):
+def calculate_temperature_statistics(work_data) -> pd.DataFrame:
     """
        Calculates the temperature statistics (mean, min, max, std, count) for each region and year.
 

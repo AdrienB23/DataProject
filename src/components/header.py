@@ -1,6 +1,6 @@
 from dash import html
 
-def create_header():
+def create_header() -> html.Header:
     """
     Creates an HTML header for a weather dashboard.
 

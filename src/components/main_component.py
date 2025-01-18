@@ -4,7 +4,7 @@ from src.components.map import create_map_layout
 from src.components.graphs.rain import create_rainfall_layout
 from src.components.graphs.wind import create_wind_layout
 
-def create_main():
+def create_main() -> html.Main:
     """
     Creates the main layout for the dashboard.
 

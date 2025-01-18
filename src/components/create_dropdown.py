@@ -1,9 +1,6 @@
-from dash import Dash, dcc, html, Input, Output, callback
+from dash import dcc, html
 
-from main import app
-
-
-def create_dropdown(values, default, dropdown_id):
+def create_dropdown(values, default, dropdown_id) -> html.Div:
     """
     Creates a Dash HTML Div containing a Dropdown component.
 

@@ -1,9 +1,8 @@
-from dash import dcc, html
-
-from main import app
+from dash import dcc
 
 
-def create_loading(loading_id, component_id):
+
+def create_loading(loading_id, component_id) -> dcc.Loading:
     """
     Creates a Dash Loading component with a nested Graph component.
 

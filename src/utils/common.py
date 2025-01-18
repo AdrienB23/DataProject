@@ -1,6 +1,6 @@
 # src/utils/common_functions.py
 from datetime import datetime
-def format_number(number):
+def format_number(number) -> str:
     """
         Formats a number with commas and two decimal places for display.
 
@@ -12,7 +12,7 @@ def format_number(number):
     """
     return f"{number:,.2f}"
 
-def calculate_percentage(part, whole):
+def calculate_percentage(part, whole)-> float:
     """
        Calculates the percentage of a part relative to a whole.
 
@@ -29,7 +29,7 @@ def calculate_percentage(part, whole):
     return (part / whole * 100) if whole != 0 else 0
 
 
-def get_year_from_date(date_string):
+def get_year_from_date(date_string)-> int:
     """
        Extracts the year from an ISO 8601 date string.
 

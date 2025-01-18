@@ -1,10 +1,9 @@
-from dash import Dash, dcc, html
+from dash import dcc, html
 
-from main import app
 from src.utils.data_loader import df_cleaned
 import pandas as pd
 
-def year_slider(slider_id):
+def year_slider(slider_id) -> html.Div:
     """
     Creates a year slider for the dashboard.
 

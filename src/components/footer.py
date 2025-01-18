@@ -1,6 +1,6 @@
 from dash import html
 
-def create_footer():
+def create_footer() -> html.Footer:
     """
     Creates a footer component for the Dashboard.
 

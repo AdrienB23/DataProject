@@ -1,6 +1,5 @@
 import json
 
-import pandas as pd
 from dash import html, callback, Output, Input
 import plotly.express as px
 
@@ -13,7 +12,7 @@ from src.utils.map_functions import get_temperature_by_region
 from src.utils.data_loader import df_cleaned
 
 # Fonction pour créer une carte centrée sur la France
-def create_map_layout():
+def create_map_layout() -> html.Div:
     """
     Creates the card layout with a year slider.
     Parameters:
@@ -47,7 +46,7 @@ def create_map_layout():
         Input('country-dropdown', 'value'),
     ]
 )
-def update_map(selected_year, selected_region):
+def update_map(selected_year, selected_region) -> dict:
     """
     Updates the map with the selected year.
     Parameters:

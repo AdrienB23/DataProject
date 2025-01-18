@@ -9,7 +9,7 @@ REGIONS_METROPOLITAN = [
     "Pays de la Loire", "Provence-Alpes-Côte d'Azur"
 ]
 
-def create_global_temperature(df, max):
+def create_global_temperature(df, max)-> go.Figure:
     """
        Creates a temperature graph for France, showing either maximum or minimum temperatures by year.
 
@@ -70,7 +70,7 @@ def create_global_temperature(df, max):
 
     return fig
 
-def create_rainfall_graph(df):
+def create_rainfall_graph(df) -> go.Figure:
     """
         Creates a graph of average rainfall by region category over the years.
 
@@ -123,7 +123,7 @@ def create_rainfall_graph(df):
     fig = go.Figure(data=traces, layout=layout)
     return fig
 
-def create_wind_graph(df, year):
+def create_wind_graph(df, year) -> go.Figure:
     """
         Creates a graph of average wind speed by region category for a given year.
 

@@ -1,7 +1,9 @@
+from typing import Tuple
+
 from dash import dcc, html, callback, Output, Input
 from src.utils.indicators_functions import temperature_min_max_year, calculate_wind_averages, get_cardinal_direction
 from src.utils.data_loader import df_cleaned
-def create_indicators():
+def create_indicators() -> html.Div:
     """
     Creates a container with weather indicators for the dashboard.
 
@@ -41,7 +43,7 @@ def create_indicators():
 
     )
 
-def create_indicator_elem(title, loading_id, loading_children):
+def create_indicator_elem(title, loading_id, loading_children) -> html.Div:
     """
     Creates an indicator element with a title and a loading component.
 
@@ -78,7 +80,7 @@ def create_indicator_elem(title, loading_id, loading_children):
         Input('country-dropdown', 'value'),
     ]
 )
-def update_indicators(selected_year, selected_region):
+def update_indicators(selected_year, selected_region) -> Tuple[str, str, str, str]:
     """
     Updates weather indicators based on the selected year and region.
 
@@ -118,7 +120,7 @@ def update_indicators(selected_year, selected_region):
     [Input('map-slider-year', 'value'),
     Input('country-dropdown', 'value'),]
 )
-def update_windrose(year, region):
+def update_windrose(year, region) -> html.Div:
     """
     Updates the wind statistics (speed and direction) based on the selected year and region.
 

@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import pandas as pd
 import numpy as np
 
@@ -11,7 +13,7 @@ NON_METROPOLITAN_TERRITORIES = [
     'terres australes et antarctiques françaises'
 ]
 
-def check_required_columns(data, required_columns):
+def check_required_columns(data, required_columns) -> None:
     """
     Checks if all required columns are present in the DataFrame.
 
@@ -26,7 +28,7 @@ def check_required_columns(data, required_columns):
     if missing_columns:
         raise ValueError(f"Missing columns: {', '.join(missing_columns)}")
 
-def filter_data_by_year(data, year):
+def filter_data_by_year(data, year) -> pd.DataFrame:
     """
     Filters the data for a specific year.
 
@@ -47,7 +49,7 @@ def filter_data_by_year(data, year):
     return filtered_data
 
 
-def filter_data_by_region(data, region):
+def filter_data_by_region(data, region) -> pd.DataFrame:
     """
     Filters the data based on the specified region.
 
@@ -75,7 +77,7 @@ def filter_data_by_region(data, region):
     return working_data
 
 
-def get_min_max_temperature(working_data):
+def get_min_max_temperature(working_data)-> Tuple[Tuple[float, str], Tuple[float, str]]:
     """
     Finds the minimum and maximum temperatures along with their respective regions.
 
@@ -97,7 +99,7 @@ def get_min_max_temperature(working_data):
     return (temp_min, loc_min), (temp_max, loc_max)
 
 
-def temperature_min_max_year(data, year, region):
+def temperature_min_max_year(data, year, region) -> Tuple[Tuple[float, str], Tuple[float, str]]:
     """
     Calcule les températures minimales et maximales pour une région et une année spécifiques,
     et renvoie les régions où ces températures ont été mesurées.
@@ -146,7 +148,7 @@ def temperature_min_max_year(data, year, region):
     return (temp_min, loc_min), (temp_max, loc_max)
 
 
-def get_min_max(working_data):
+def get_min_max(working_data) -> Tuple[str, str, float, float]:
     """
         Finds the minimum and maximum temperatures in the provided data and returns their corresponding locations and values.
 
@@ -172,7 +174,7 @@ def get_min_max(working_data):
     return loc_max, loc_min, temp_max, temp_min
 
 
-def calculate_average_wind_speed(data):
+def calculate_average_wind_speed(data) -> float:
     """
     Calculates the average wind speed from the given data.
 
@@ -183,7 +185,7 @@ def calculate_average_wind_speed(data):
     - float: The average wind speed.
     """
     return data['Vitesse du vent moyen 10 mn'].mean()
-def calculate_average_wind_direction(data):
+def calculate_average_wind_direction(data) -> float:
     """
     Calculates the average wind direction from the given data, considering the circular nature of directions.
 
@@ -202,7 +204,7 @@ def calculate_average_wind_direction(data):
 
     # Calculate the average direction in degrees
     return np.degrees(np.arctan2(y, x)) % 360
-def calculate_wind_averages(data, year, region):
+def calculate_wind_averages(data, year, region) -> Tuple[float, float]:
     """
     Calculates the annual average wind speed and direction for a given region.
 
