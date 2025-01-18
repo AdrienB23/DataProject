@@ -19,7 +19,7 @@ def create_temperature_layout():
     return html.Div(
         className="component-container",
         children=[
-            html.H1("Graphique de la température moyenne en France"),
+            html.H1("Graphique des températures extrêmes en France"),
             create_dropdown_min_max(),
             create_loading("loading-temp", "temperature-graph"),
         ]
