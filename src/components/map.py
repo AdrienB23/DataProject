@@ -25,7 +25,7 @@ def create_map_layout():
         className="component-container",
         children=[
             html.H1("Carte Choroplèthe des Températures Moyennes par Régions"),
-            year_slider(),
+            year_slider('map-slider-year'),
             create_dropdown_tom_tom(),
             html.Div(
                 className="map-container",
@@ -42,7 +42,7 @@ def create_map_layout():
 @callback(
     Output('temperature-map', 'figure'),
     [
-        Input('slider-year', 'value'),
+        Input('map-slider-year', 'value'),
         Input('country-dropdown', 'value'),
     ]
 )

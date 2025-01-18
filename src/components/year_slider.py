@@ -1,17 +1,23 @@
-from dash import Dash, dcc, html, Input, Output, callback
+from dash import Dash, dcc, html
 
 from main import app
+from src.utils.data_loader import df_cleaned
+import pandas as pd
 
+def year_slider(slider_id):
+    df_cleaned["Date"] = pd.to_datetime(df_cleaned["Date"], errors="coerce", utc=True)
 
-def year_slider():
+    if df_cleaned["Date"].isnull().any():
+        raise ValueError("Certaines valeurs dans la colonne 'Date' ne peuvent pas être converties en datetime.")
+
+    df_cleaned["Année"] = df_cleaned["Date"].dt.year
     return html.Div([
         dcc.Slider(
-            min=2010,
-            max=2024,
+            min=int(df_cleaned["Année"].min()),
+            max=int(df_cleaned["Année"].max()),
             step=1,
-            value=2024,
+            value=int(df_cleaned["Année"].max()),
             marks={year: str(year) for year in range(2010, 2025)},
-            id='slider-year'
+            id=slider_id
         ),
-        html.Div(id='slider-output-container'),
     ])

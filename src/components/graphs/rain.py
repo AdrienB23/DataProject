@@ -1,5 +1,4 @@
 from dash import html, dcc
-from src.components.create_loading import create_loading
 from src.utils.data_loader import df_cleaned
 from src.utils.graphs_functions import create_rainfall_graph
 
@@ -18,7 +17,7 @@ def create_rainfall_layout():
     return html.Div(
         className="component-container",
         children=[
-            html.H1("Graphique de la précipitation moyenne anuelle en France"),
+            html.H1("Graphique des Précipitations Moyenne en France"),
 
             dcc.Graph(
                 id='rainfall-graph',

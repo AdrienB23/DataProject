@@ -62,12 +62,14 @@ def create_indicators():
 
 # Callback pour mettre à jour les indicateurs
 @callback(
-    [Output('temp-max', 'children'),
-    Output('temp-min', 'children'),
-     Output('temp-max-loc', 'children'),
-     Output('temp-min-loc', 'children'),],
     [
-        Input('slider-year', 'value'),
+        Output('temp-max', 'children'),
+        Output('temp-min', 'children'),
+        Output('temp-max-loc', 'children'),
+        Output('temp-min-loc', 'children'),
+    ],
+    [
+        Input('map-slider-year', 'value'),
         Input('country-dropdown', 'value'),
     ]
 )
