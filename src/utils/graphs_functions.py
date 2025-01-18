@@ -11,17 +11,17 @@ REGIONS_METROPOLITAN = [
 
 def create_global_temperature(df, max)-> go.Figure:
     """
-       Creates a temperature graph for France, showing either maximum or minimum temperatures by year.
+    Creates a temperature graph for France, showing either maximum or minimum temperatures by year.
 
-       Args:
-           df (pd.DataFrame): The dataframe containing temperature data with 'Date' and 'Température (°C)' columns.
-           max (bool): If True, shows the maximum temperature; if False, shows the minimum temperature.
+    Args:
+        df (pd.DataFrame): The dataframe containing temperature data with 'Date' and 'Température (°C)' columns.
+        max (bool): If True, shows the maximum temperature; if False, shows the minimum temperature.
 
-       Returns:
-           go.Figure: The Plotly figure with the temperature graph.
+    Returns:
+        go.Figure: The Plotly figure with the temperature graph.
 
-       Raises:
-           ValueError: If the 'Date' column cannot be converted to datetime.
+    Raises:
+        ValueError: If the 'Date' column cannot be converted to datetime.
     """
     # Convert 'Date' to datetime
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce", utc=True)

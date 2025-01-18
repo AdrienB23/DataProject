@@ -161,25 +161,88 @@ data_project/
    
 ### Ajouter un nouveau graphique
 
+1. Créer une nouvelle fonction dans `src/utils/graphs_functions.py`
+   ```python
+   import plotly.graph_objects as go
+   import pandas as pd
+   def create_graph(df):
+      traces = [go.Scatter(
+         # Votre Trace ici
+      )]
+
+      layout = go.Layout(
+         # Votre Layout ici
+      )
+
+      fig = go.Figure(data=traces, layout=layout)
+      return fig
+   ```
+
+2. Créer un nouveau fichier dans `src/components/graphs`
+   ```python
+   from dash import html, dcc
+   from src.utils.data_loader import df_cleaned
+   from src.utils.graphs_functions import create_graph
+   def create_layout():
+      fig = create_graph()
+      return html.Div(
+         children=[
+            # Votre contenue ici
+
+            dcc.Graph(
+               figure=fig
+            )
+         ]
+    )
+   ```
+
+3. Ajouter le composant dans `src/components/main_component.py`
+```python
+   from src.components.graphs import create_layout
+   from dash import html
+   def create_main() -> html.Main:
+      return html.Main([
+         create_layout()
+         # Les autres graphiques/Map ici
+      ])
+```
 
 ## Rapport d'analyse
 
-### Principales Conclusions
-
 1. Tendance Générale
-   - Description des tendances principales observées
-   - Métriques clés et leur évolution
+L'analyse des températures moyennes, des précipitations et de la vitesse du vent sur la période 2010-2024 révèle des tendances marquées dans chaque catégorie.
+
+- Températures : Les températures maximales et minimales ont montré une tendance à la hausse dans la plupart des régions. Cette tendance au réchauffement est observée globalement, bien que plus prononcée dans certaines régions comme Occitanie ou Provence-Alpes-Côte d'Azur, où les hausses sont plus significatives comparativement aux autres régions.
+
+- Précipitations : Des périodes de sécheresses suivit de périodes très humides sont observés dans certaines régions, comme en Guyane ou encore à la Réunion, tandis que d'autres régions ont montré une stabilité relative dans les précipitations..
+
+- Vitesse du vent : La vitesse moyenne du vent a montré une certaine variation, mais sans tendance nette d'augmentation ou de diminution.
+
+### Métriques clés et leur évolution
+
+- Température maximale moyenne en 2010 : 22,7 °C, en 2024 : 24,5 °C.
+- Température minimale moyenne en 2010 : 4,8 °C, en 2024 : 6,4 °C.
+
+- Précipitation Guadeloupe : 2010 : 4.8 mm, 2024 : 3.3 mm.
+- Précipitation Régions Métropolitaines : 2010 : 2,1 mm, 2024 : 2,2 mm.
+
+- Vitesse du vent Régions Métropolitaines : 2010 : 3,7 m/s, 2024 : 3,8 m/s.
 
 2. Points Saillants
-   - Observation 1 avec données à l'appui
-   - Observation 2 avec données à l'appui
+
+- Observation 1 : Températures Maximales : Les températures maximales ont montré une hausse significative de plus de 2 °C dans des régions comme Occitanie et Provence-Alpes-Côte d'Azur entre 2010 et 2024. Cette tendance pourrait être liée à l'intensification des phénomènes climatiques extrêmes et à des changements dans les conditions locales, notamment l'urbanisation et l'amplification de l'effet d'îlot de chaleur urbain.
+
+- Observation 2 : Précipitations : En Guyane et La Réunion, des périodes de sécheresse sont suivies de précipitations, créant des conditions de gestion des ressources en eau particulièrement difficiles. D’autres régions, comme en France Métropolitaine, connaissent des précipitations plus constantes tout au long de l'année.
+
+- Observation 3 : Vitesse du Vent : Aucune variation notable n'a été observée concernant la vitesse du vent. Les tendances sont globalement constantes, mais aucune tendance à la hausse ou à la baisse n'a été observée.
 
 3. Recommandations
-   - Recommandation 1 basée sur l'analyse
-   - Recommandation 2 basée sur l'analyse
 
-### Visualisations Clés
-Description des visualisations les plus pertinentes et leurs interprétations.
+- Recommandation 1 : Gestion de l'Eau : Compte tenu de la baisse des précipitations, il est recommandé de mettre en place des politiques de gestion de l'eau plus strictes, comme en Martinique. Des investissements dans des infrastructures de stockage d'eau et des technologies d'irrigation efficaces seraient bénéfiques.
+
+- Recommandation 2 : Stratégies d'Agriculture Adaptée au Climat : Avec la hausse des températures, il est crucial d'adopter des pratiques agricoles plus résistantes à la chaleur et à la sécheresse. L'agriculture durable devrait être encouragée, en particulier en Martinique.
+
+- Recommandation 3 : Adaptation aux cyclones : Même si la vitesse moyenne du vent reste stable, les régions côtières, notamment La Réunion et Guadeloupe, doivent continuer à renforcer leurs infrastructures et à se préparer aux cyclones, qui peuvent entraîner des rafales de vent beaucoup plus fortes, parfois destructrices.
 
 ## Copyright
 
