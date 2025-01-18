@@ -167,6 +167,12 @@ def calculate_wind_averages(data, year, region):
 
     return avg_speed, avg_direction
 
+def get_cardinal_direction(degrees):
+    directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
+                  'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO']
+    index = round(degrees / (360 / len(directions))) % len(directions)
+    return directions[index]
+
 
 if __name__ == "__main__":
     data = get_cleaned_data()

@@ -1,5 +1,5 @@
 from dash import dcc, html, callback, Output, Input
-from src.utils.indicators_functions import temperature_min_max_year
+from src.utils.indicators_functions import temperature_min_max_year, calculate_wind_averages, get_cardinal_direction
 from src.utils.data_loader import df_cleaned
 def create_indicators():
     return html.Div(
@@ -88,3 +88,36 @@ def update_indicators(selected_year, selected_region):
     except Exception as e:
         print(f"Erreur: {str(e)}")
         return "Erreur", "Erreur"
+
+@callback(
+    Output('wind-stats', 'children'),
+    [Input('slider-year', 'value'),
+    Input('country-dropdown', 'value'),]
+)
+def update_windrose(year, region):
+    try:
+        # Obtenir les données de vent
+        wind_speed, wind_direction = calculate_wind_averages(df_cleaned, year, region)
+
+        stats = html.Div(
+            [
+                html.H2(f"{get_cardinal_direction(wind_direction)}", title="Direction cardinale", style={"font-weight": "bold"}),
+                html.H2(f"{wind_speed:.2f} m/s", title="Vitesse moyenne"),
+            ],
+            style={
+                "display": "flex",
+                "flexDirection": "column",
+                "justifyContent": "center",
+                "alignItems": "center",
+                "textAlign": "center",
+                "height": "100%",
+            },
+        )
+
+    except Exception as e:
+        stats = html.Div([
+            html.H4("Erreur"),
+            html.P(str(e))
+        ])
+
+    return stats
