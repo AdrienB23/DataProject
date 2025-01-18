@@ -1,6 +1,5 @@
 import plotly.graph_objects as go
 import pandas as pd
-from src.utils.data_loader import df_cleaned
 
 def create_global_temperature(df, max):
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce", utc=True)
@@ -73,16 +72,18 @@ def create_rainfall_graph(df):
             x=data["Année"],
             y=data["Précipitations dans les 24 dernières heures"],
             mode="lines+markers",
-            name="",
-            hovertemplate="<b>Catégorie : %{text}</b><br>Année : %{x}<br>Précipitations : %{y:.1f} mm",
-            text=data["Catégorie Région"]
+            text=data["Catégorie Région"],
+            hovertemplate="<b>Catégorie : %{text}</b><br>" +
+                "Année : %{x}<br>Précipitations : %{y:.1f} mm",
+            name=category,
         )
         traces.append(trace)    
 
     layout = go.Layout(
-        title={"text" : "Moyenne des précipitations annuelles par catégorie", "x": 0.5},
+        title={"text" : "Moyenne des précipitations annuelles par catégorie de région", "x": 0.5},
         xaxis={"title" : {"text" : "Date"}},
         yaxis={"title" : {"text" : "Précipitation (mm)"}},
+        template="plotly_white",
     )
 
     fig = go.Figure(data=traces, layout=layout)

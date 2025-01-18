@@ -1,6 +1,6 @@
 * {
     padding: 0;
-    margin: 0;
+    margin: 0 !important;
     box-sizing: border-box;
 }
 
@@ -9,12 +9,26 @@ body {
     background-color: white;
 }
 
-h1 {
-    font-size: 24px;
-    font-weight: 500;
-}
-
 .page-container {
     display: flex;
     flex-direction: column;
+}
+
+h1 {
+    font-size: 24px;
+    color: #0091D5;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+h3 {
+    font-size: 20px;
+    color: #0091D5;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 12px;
 }
