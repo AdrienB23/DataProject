@@ -3,7 +3,7 @@
 ## User Guide
 
 ### Prérequis
-- Python 3.8 ou supérieur
+- Python 3.12.5 ou supérieur
 - Gestionnaire de paquets pip
 
 ### Installation
@@ -11,7 +11,6 @@
    ```bash
    git clone https://github.com/AdrienB23/DataProject.git
    cd DataProject
-   .\.env\Scripts\activate
    ```
    
 2. Si vous rencontrez des problèmes liés au téléchargement du fichier csv,:
