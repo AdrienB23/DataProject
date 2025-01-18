@@ -16,13 +16,13 @@
 
 2. Créer un environnement virtuel
    ```bash
-   python -m venv .venv
+   python -m venv .env
    ```
 
 3. Activer l'environnement virtuel
    - Windows :
      ```bash
-     .venv\Scripts\activate
+     .env\Scripts\activate
      ```
 
 4. Installer les dépendances

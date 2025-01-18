@@ -43,6 +43,19 @@ def create_indicators():
                         ]
                     )
                 ]
+            ),
+            html.Div(
+                className="indicator-elem",
+                children=[
+                    html.H3("Rose des Vents"),
+                    dcc.Loading(
+                        id="loading-windrose",
+                        type="dot",
+                        children=[
+                            html.H2(id='wind-stats'),
+                        ]
+                    )
+                ]
             )
         ]
 
@@ -76,3 +89,4 @@ def update_indicators(selected_year, selected_region):
     except Exception as e:
         print(f"Erreur: {str(e)}")
         return "Erreur", "Erreur"
+
