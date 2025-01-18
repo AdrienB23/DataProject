@@ -1,40 +1,51 @@
 from src.utils.get_data import get_cleaned_data
 import pandas as pd
 
+from src.utils.indicators_functions import check_required_columns
+
 
 def get_temperature_by_region(data, year=None):
     """
-    Calcule les températures moyennes par région pour une année donnée.
+    Calculates the average temperatures by region for a given year.
 
     Parameters:
-    - data (pd.DataFrame): Le DataFrame contenant les données météorologiques
-    - year (int, optional): L'année pour laquelle calculer les moyennes. Si None, calcule pour toutes les années
+    - data (pd.DataFrame): The DataFrame containing the weather data.
+    - year (int, optional): The year to calculate the averages for. If None, calculates for all years.
 
     Returns:
-    - pd.DataFrame: DataFrame contenant les régions, années et leurs températures moyennes
+    - pd.DataFrame: DataFrame containing regions, years, and their average temperatures along with other statistics.
     """
-    # Vérification des colonnes nécessaires
     required_columns = ['Date', 'Température (°C)', 'region (name)', 'region (code)']
-    missing_columns = [col for col in required_columns if col not in data.columns]
-    if missing_columns:
-        raise ValueError(f"Colonnes manquantes : {', '.join(missing_columns)}")
+    check_required_columns(data, required_columns)
 
-    # Créer une copie pour éviter de modifier le DataFrame original
     work_data = data.copy()
-
-    # Convertir la colonne Date en datetime une seule fois
-    work_data['Date'] = pd.to_datetime(work_data['Date'], errors='coerce', utc=True)
-
-    # Extraire l'année de manière plus efficace
+    work_data['Date'] = pd.to_datetime(work_data['Date'], errors='coerce', utc=True) # Convert the 'Date' column to datetime format once
     work_data['Année'] = work_data['Date'].dt.year
-
-    # Filtrer par année si spécifiée
+    # Filter by the specified year if provided
     if year is not None:
         work_data = work_data[work_data['Année'] == year]
         if work_data.empty:
             raise ValueError(f"Aucune donnée trouvée pour l'année {year}")
 
-    # Calcul des statistiques par région et par année
+    temperature_by_region = calculate_temperature_statistics(work_data)
+
+    # Sort the results by year and region
+    result = temperature_by_region.sort_values(['Année', 'Région'])
+
+    return result
+
+
+def calculate_temperature_statistics(work_data):
+    """
+       Calculates the temperature statistics (mean, min, max, std, count) for each region and year.
+
+       Parameters:
+       - data (pd.DataFrame): The DataFrame containing the data to calculate statistics for.
+
+       Returns:
+       - pd.DataFrame: The DataFrame with the calculated temperature statistics.
+    """
+    # Calculate the statistics (mean, min, max, std, count) by region and year
     temperature_by_region = (
         work_data.groupby(['region (name)', 'region (code)', 'Année'])
         .agg({
@@ -43,8 +54,7 @@ def get_temperature_by_region(data, year=None):
         .round(2)
         .reset_index()
     )
-
-    # Aplatir les colonnes multi-index
+    # Flatten the multi-index columns
     temperature_by_region.columns = [
         'Région',
         'Code Région',
@@ -55,11 +65,8 @@ def get_temperature_by_region(data, year=None):
         'Écart-type',
         'Nombre de mesures'
     ]
+    return temperature_by_region
 
-    # Trier les résultats
-    result = temperature_by_region.sort_values(['Année', 'Région'])
-
-    return result
 
 if __name__ == "__main__":
     # Année d'analyse

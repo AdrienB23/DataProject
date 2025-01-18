@@ -1,16 +1,20 @@
 import sys
 import os
+from config import CONFIG
+from src.utils.get_data import get_raw_data
 
-# Ajoute le répertoire racine au chemin de recherche
+# Add the root directory to the search path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
-from config import CONFIG
-from src.utils.get_data import get_raw_data, get_cleaned_data 
-
 def clean_data():
-    """Nettoie les données brutes et les sauvegarde"""
+    """
+        Cleans raw data by dropping unnecessary columns and saves the cleaned data.
+
+        The function retrieves raw data, removes specific columns that are deemed irrelevant,
+        and saves the resulting cleaned dataset to the location specified in the CONFIG file.
+    """
     df = get_raw_data()
-    # Enlever des colonnes inutiles
+    # Drop unnecessary columns from the dataset
     df.drop([
         "Pression au niveau mer",
         "Variation de pression en 3 heures",
@@ -73,8 +77,9 @@ def clean_data():
         "Temps passé 1.1",
         "Temps présent.1",
     ], axis=1, inplace=True)
-    output_file = CONFIG['DATA_PATH']['CLEANED']
 
+    # Save the cleaned dataset to the specified output file
+    output_file = CONFIG['DATA_PATH']['CLEANED']
     df.to_csv(output_file,
             sep=';',
             index=False,
