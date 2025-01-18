@@ -99,31 +99,78 @@ def get_min_max_temperature(working_data):
 
 def temperature_min_max_year(data, year, region):
     """
-    Calculates the minimum and maximum temperatures for a given region and year,
-    and returns the regions where these temperatures were measured.
+    Calcule les températures minimales et maximales pour une région et une année spécifiques,
+    et renvoie les régions où ces températures ont été mesurées.
 
     Parameters:
-    - data (pd.DataFrame): The DataFrame containing the weather data.
-    - year (int): The year for which to calculate the temperatures.
-    - region (str): The region for which to calculate the temperatures
-                    (e.g., guyane, martinique, guadeloupe, france métropolitaine).
+    - data (pd.DataFrame): Le DataFrame contenant les données météorologiques
+    - year (int): L'année pour laquelle calculer les températures
+    - region (str): La région pour laquelle calculer les températures
+                    (guyane, martinique, guadeloupe, france métropolitaine)
 
     Returns:
-    - tuple: ((min temperature, region of min), (max temperature, region of max))
+    - tuple: ((température minimale, région du min), (température maximale, région du max))
     """
+    # Check that the necessary columns are present in the data
     required_columns = ['Date', 'Température (°C)', 'region (name)', 'communes (name)']
-
-    # Check if required columns are present
     check_required_columns(data, required_columns)
+    # Create a copy of the data to avoid modifying the original DataFrame
+    work_data = data.copy()
+    # Convert 'Date' to datetime and extract the year
+    work_data['Date'] = pd.to_datetime(work_data['Date'], errors='coerce')
+    # Filter data by the specified year
+    work_data['Année'] = work_data['Date'].dt.year
+    work_data = work_data[work_data['Année'] == year]
+    # Drop rows with missing essential data
+    work_data = work_data.dropna(subset=['Température (°C)', 'region (name)', 'communes (name)'])
+    if work_data.empty:
+        raise ValueError(f"Aucune donnée trouvée pour l'année {year}")
+    # Handle filtering based on the region
 
-    # Filter data by year
-    filtered_data = filter_data_by_year(data, year)
+    if region.lower() == 'france métropolitaine':
+        # Exclude non-metropolitan territories
+        working_data = work_data[
+            ~(work_data['region (name)'].str.lower().isin(NON_METROPOLITAN_TERRITORIES) |
+              work_data['communes (name)'].str.lower().str.contains('|'.join(NON_METROPOLITAN_TERRITORIES)))
+        ]
+        if working_data.empty:
+            raise ValueError("Aucune donnée trouvée pour la France métropolitaine")
+    else:
+        # Filter for the specific region
+        working_data = work_data[work_data['region (name)'].str.lower() == region.lower()]
+        if working_data.empty:
+            raise ValueError(f"Aucune donnée trouvée pour la région {region}")
+    # Get the minimum and maximum temperatures with their corresponding locations
+    loc_max, loc_min, temp_max, temp_min = get_min_max(working_data)
 
-    # Filter data by region
-    working_data = filter_data_by_region(filtered_data, region)
+    return (temp_min, loc_min), (temp_max, loc_max)
 
-    # Get min and max temperatures
-    return get_min_max_temperature(working_data)
+
+def get_min_max(working_data):
+    """
+        Finds the minimum and maximum temperatures in the provided data and returns their corresponding locations and values.
+
+        Args:
+            working_data (pandas.DataFrame): A DataFrame containing temperature data and location information.
+                                             The DataFrame must have columns 'Température (°C)' and 'region (name)'.
+
+        Returns:
+            tuple: A tuple containing four values:
+                - loc_max (str): The location of the maximum temperature.
+                - loc_min (str): The location of the minimum temperature.
+                - temp_max (float): The maximum temperature value.
+                - temp_min (float): The minimum temperature value.
+        """
+    # Find the index of the minimum and maximum temperatures
+    idx_min = working_data['Température (°C)'].idxmin()
+    idx_max = working_data['Température (°C)'].idxmax()
+    temp_min = working_data.loc[idx_min, 'Température (°C)']
+    temp_max = working_data.loc[idx_max, 'Température (°C)']
+    # Get the corresponding temperature values
+    loc_min = f"{working_data.loc[idx_min, 'region (name)']}"
+    loc_max = f"{working_data.loc[idx_max, 'region (name)']}"
+    return loc_max, loc_min, temp_max, temp_min
+
 
 def calculate_average_wind_speed(data):
     """
