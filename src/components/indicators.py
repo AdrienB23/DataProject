@@ -93,7 +93,7 @@ def update_indicators(selected_year, selected_region):
 
 @callback(
     Output('wind-stats', 'children'),
-    [Input('slider-year', 'value'),
+    [Input('map-slider-year', 'value'),
     Input('country-dropdown', 'value'),]
 )
 def update_windrose(year, region):
