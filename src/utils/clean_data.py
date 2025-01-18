@@ -78,6 +78,9 @@ def clean_data():
         "Temps présent.1",
     ], axis=1, inplace=True)
 
+    # Ensure the directory exists before saving the file
+    output_dir = os.path.dirname(CONFIG['DATA_PATH']['CLEANED'])
+    os.makedirs(output_dir, exist_ok=True)
     # Save the cleaned dataset to the specified output file
     output_file = CONFIG['DATA_PATH']['CLEANED']
     df.to_csv(output_file,
