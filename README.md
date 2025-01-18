@@ -13,6 +13,11 @@
    cd DataProject
    .\.env\Scripts\activate
    ```
+   
+2. Si vous rencontrez des problèmes liés au téléchargement du fichier csv,:
+- Rendez-vous sur [opendatasoft](https://public.opendatasoft.com/explore/dataset/donnees-synop-essentielles-omm/export/?sort=date&location=2,-0.52734,-0.17578&basemap=jawg.light&dataChart=eyJxdWVyaWVzIjpbeyJjaGFydHMiOlt7InR5cGUiOiJjb2x1bW4iLCJmdW5jIjoiQVZHIiwieUF4aXMiOiJ0YyIsInNjaWVudGlmaWNEaXNwbGF5Ijp0cnVlLCJjb2xvciI6IiNGRjUxNUEifV0sInhBeGlzIjoiZGF0ZSIsIm1heHBvaW50cyI6IiIsInRpbWVzY2FsZSI6ImRheSIsInNvcnQiOiIiLCJjb25maWciOnsiZGF0YXNldCI6ImRvbm5lZXMtc3lub3AtZXNzZW50aWVsbGVzLW9tbSIsIm9wdGlvbnMiOnsic29ydCI6ImRhdGUifX19XSwiZGlzcGxheUxlZ2VuZCI6dHJ1ZSwiYWxpZ25Nb250aCI6dHJ1ZX0%3D)
+- Téléchargez le fichier en csv 
+- Placez le fichier dans le dossier data/raw/
 
 2. Créer un environnement virtuel
    ```bash
@@ -49,7 +54,7 @@ Les données utilisées dans ce dashboard proviennent de [Source](https://public
 ### Structure des données
 - Données brutes (`data/raw/donnees-synop-essentielles-omm.csv`) :
   - Format : CSV
-  - Période : 2010 - 2025
+  - Période : 2010 - 2024
 
 - Données nettoyées (`data/cleaned/clean_data.csv`) :
 - Suppressions des colonnes inutilisées : 
@@ -153,6 +158,9 @@ data_project/
        if pathname == '/new':
            return new_page.layout
    ```
+   
+### Ajouter un nouveau graphique
+
 
 ## Rapport d'analyse
 
