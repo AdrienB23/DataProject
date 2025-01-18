@@ -6,7 +6,7 @@ import plotly.express as px
 
 from config import CONFIG
 from src.components.create_loading import create_loading
-from src.components.dropdown_dom_tom import create_dropdown_tom_tom
+from src.components.create_dropdown import create_dropdown
 from src.components.indicators import create_indicators
 from src.components.year_slider import year_slider
 from src.utils.map_functions import get_temperature_by_region
@@ -15,18 +15,19 @@ from src.utils.data_loader import df_cleaned
 # Fonction pour créer une carte centrée sur la France
 def create_map_layout():
     """
-    Crée la mise en page de la carte avec un slider d'année.
+    Creates the card layout with a year slider.
     Parameters:
-        df (pd.DataFrame): DataFrame contenant les données de température.
+        df (pd.DataFrame): DataFrame containing temperature data.
     Returns:
-        html.Div: Composant Dash contenant le slider et la carte.
+        html.Div: Dash component containing the slider and the map.
     """
+    values = ['France Métropolitaine', 'Guadeloupe', 'Guyane', 'La Réunion', 'Martinique']
     return html.Div(
         className="component-container",
         children=[
             html.H1("Carte Choroplèthe des Températures Moyennes par Régions"),
             year_slider('map-slider-year'),
-            create_dropdown_tom_tom(),
+            create_dropdown(values, 'France Métropolitaine', 'country-dropdown'),
             html.Div(
                 className="map-container",
                 children=[
@@ -48,13 +49,12 @@ def create_map_layout():
 )
 def update_map(selected_year, selected_region):
     """
-    Met à jour la carte en fonction de l'année sélectionnée.
+    Updates the map with the selected year.
     Parameters:
-        selected_year (int): Année sélectionnée par le slider.
+        selected_year (int): Year selected by the slider.
         :param selected_region:
     Returns:
-        plotly.graph_objs._figure.Figure: Carte mise à jour.
-
+        plotly.graph_objs._figure.Figure: Updated map.
     """
     # Filtrer les données en fonction de l'année
     filtered_df = get_temperature_by_region(df_cleaned , selected_year)

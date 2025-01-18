@@ -2,62 +2,67 @@ from dash import dcc, html, callback, Output, Input
 from src.utils.indicators_functions import temperature_min_max_year, calculate_wind_averages, get_cardinal_direction
 from src.utils.data_loader import df_cleaned
 def create_indicators():
+    """
+    Creates a container with weather indicators for the dashboard.
+
+    This function generates an HTML `<div>` element that contains multiple 
+    weather indicators
+
+    Returns:
+        html.Div: A container element holding the weather indicators
+    """
     return html.Div(
         className="indicator-container",
         children=[
-            html.Div(
-                className="indicator-elem",
-                children=[
-                    html.H3("Temperature Max"),
-                    dcc.Loading(
-                        id="loading-max",
-                        type="dot",
-                        children=[
-                            html.Div(
-                                className="result-container",
-                                children=[
-                                    html.H2(id='temp-max'),
-                                    html.H4(id='temp-max-loc'),
-                                ]
-                            )
-                        ]
-                    ),
-                ]
+            create_indicator_elem(  
+                "Temperature Max",
+                "loading-max",
+                html.Div(
+                    className="result-container",
+                    children=[
+                        html.H2(id='temp-max'),
+                        html.H4(id='temp-max-loc'),
+                    ]
+                )
             ),
-            html.Div(
-                className="indicator-elem",
-                children=[
-                    html.H3("Temperature Min"),
-                    dcc.Loading(
-                        id="loading-max",
-                        type="dot",
-                        children=[
-                            html.Div(
-                                className="result-container",
-                                children=[
-                                    html.H2(id='temp-min'),
-                                    html.H4(id='temp-min-loc'),
-                                ]
-                            )
-                        ]
-                    )
-                ]
+            create_indicator_elem(  
+                "Temperature Min",
+                "loading-max",
+                html.Div(
+                    className="result-container",
+                    children=[
+                        html.H2(id='temp-min'),
+                        html.H4(id='temp-min-loc'),
+                    ]
+                )
             ),
-            html.Div(
-                className="indicator-elem",
-                children=[
-                    html.H3("Rose des Vents"),
-                    dcc.Loading(
-                        id="loading-windrose",
-                        type="dot",
-                        children=[
-                            html.H2(id='wind-stats'),
-                        ]
-                    )
-                ]
-            )
+            create_indicator_elem("Rose des Vents", "loading-windrose", html.H2(id='wind-stats'))
         ]
 
+    )
+
+def create_indicator_elem(title, loading_id, loading_children):
+    """
+    Creates an indicator element with a title and a loading component.
+
+    Args:
+        title (str): The title or label of the weather indicator.
+        loading_id (str): The ID for the loading component.
+        loading_children (html.Div or html.H2): The children content to be displayed inside the loading component.
+
+    Returns:
+        html.Div: A container element that holds the indicator's title and the loading component.
+    """
+    return html.Div(
+        className="indicator-elem",
+        children=[
+            html.H3(title),
+            dcc.Loading(
+                id=loading_id,
+                type="dot",
+                children=loading_children
+            )
+        ]
     )
 
 # Callback pour mettre à jour les indicateurs
@@ -74,6 +79,23 @@ def create_indicators():
     ]
 )
 def update_indicators(selected_year, selected_region):
+    """
+    Updates weather indicators based on the selected year and region.
+
+    Args:
+        selected_year (int or str): The year for which the weather data is requested.
+        selected_region (str): The region for which the weather data is requested.
+
+    Returns:
+        tuple: A tuple containing four values:
+            - max_text (str): Formatted maximum temperature in °C.
+            - min_text (str): Formatted minimum temperature in °C.
+            - max_text_loc (str): Location corresponding to the maximum temperature.
+            - min_text_loc (str): Location corresponding to the minimum temperature.
+        
+        If data is unavailable or an error occurs, returns:
+            - ("N/A", "N/A") or ("Error", "Error").
+    """
     if not selected_year or not selected_region or df_cleaned is None:
         return "N/A", "N/A"
 
@@ -97,6 +119,17 @@ def update_indicators(selected_year, selected_region):
     Input('country-dropdown', 'value'),]
 )
 def update_windrose(year, region):
+    """
+    Updates the wind statistics (speed and direction) based on the selected year and region.
+
+    Args:
+        year (int or str): The year for which the wind data is requested.
+        region (str): The region for which the wind data is requested.
+
+    Returns:
+        html.Div: An HTML `<div>` containing the wind statistics (direction and speed) 
+        or an error message if data cannot be fetched.
+    """
     try:
         # Obtenir les données de vent
         wind_speed, wind_direction = calculate_wind_averages(df_cleaned, year, region)

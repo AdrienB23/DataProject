@@ -7,11 +7,7 @@ from src.components.create_loading import create_loading
 
 def create_wind_layout():
     """
-    Generates a layout of average yearly rainfall by region
-
-    Parameters:
-        df (pd.DataFrame): DataFrame containing rainfall data with a column named
-                            'Précipitations dans les 24 dernières heures' and 'Date'.
+    Generates a layout of average speed wind by region
 
     Returns:
         html.Div: A Dash HTML Div containing the graph and title.
@@ -31,4 +27,12 @@ def create_wind_layout():
     Input('wind-slider-year', 'value')
 )
 def update_wind_graph(selected_year):
+    """
+    Updates the graph depending on the year selected.
+    Parameters:
+        selected_year (int): Year selected by the slider.
+        
+    Returns:
+        plotly.graph_objs._figure.Figure: Graph update.
+    """
     return create_wind_graph(df_cleaned, selected_year)
