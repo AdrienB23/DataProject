@@ -1,26 +1,26 @@
 from dash import html
+from src.components.create_dropdown import create_dropdown
 from src.components.create_loading import create_loading
-from src.components.dropdown_min_max import create_dropdown_min_max
 from dash import Input, Output, callback
 from src.utils.graphs_functions import create_global_temperature
 from src.utils.data_loader import df_cleaned
 
 def create_temperature_layout():
     """
-    Generates a graph of average daily temperature in France
-
-    Parameters:
-        df (pd.DataFrame): DataFrame containing temperature data with a column named
-                            'Température Moyenne (°C)' and 'Date'.
+    Generates a layout of average temperature in France
 
     Returns:
         html.Div: A Dash HTML Div containing the graph and title.
     """
+    values=[
+        {'label': 'Température Minimum', 'value': False},
+        {'label': 'Température Maximum', 'value': True}
+    ]
     return html.Div(
         className="component-container",
         children=[
             html.H1("Graphique des températures extrêmes en France"),
-            create_dropdown_min_max(),
+            create_dropdown(values, True, 'temp-dropdown'),
             create_loading("loading-temp", "temperature-graph"),
         ]
     )
@@ -32,4 +32,12 @@ def create_temperature_layout():
     ]
 )
 def update_temp_graph(selected_temp):
+    """
+    Updates the graph depending on the year selected.
+    Parameters:
+        selected_year (int): Year selected by the slider.
+        
+    Returns:
+        plotly.graph_objs._figure.Figure: Graph update.
+    """
     return create_global_temperature(df_cleaned, selected_temp)

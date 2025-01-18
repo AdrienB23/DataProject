@@ -5,6 +5,19 @@ from src.utils.data_loader import df_cleaned
 import pandas as pd
 
 def year_slider(slider_id):
+    """
+    Creates a year slider for the dashboard.
+
+    Args:
+        slider_id (str): The ID for the slider component.
+
+    Raises:
+        ValueError: If there are invalid values in the "Date" column that cannot 
+        be converted to datetime.
+
+    Returns:
+        html.Div: A container element holding the year slider component.
+    """
     df_cleaned["Date"] = pd.to_datetime(df_cleaned["Date"], errors="coerce", utc=True)
 
     if df_cleaned["Date"].isnull().any():

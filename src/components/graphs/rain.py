@@ -6,10 +6,6 @@ def create_rainfall_layout():
     """
     Generates a layout of average yearly rainfall by region
 
-    Parameters:
-        df (pd.DataFrame): DataFrame containing rainfall data with a column named
-                            'Précipitations dans les 24 dernières heures' and 'Date'.
-
     Returns:
         html.Div: A Dash HTML Div containing the graph and title.
     """
