@@ -11,4 +11,7 @@ def create_loading(loading_id, component_id):
             dcc.Graph(id=component_id)
         ],
         fullscreen=False,
+        parent_style={
+            "width": "100%",
+        },
     )
