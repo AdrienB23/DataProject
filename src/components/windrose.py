@@ -1,8 +1,8 @@
 from src.utils.data_loader import df_cleaned
 from src.utils.indicators_functions import calculate_wind_averages
 from dash import html, callback
-import plotly.graph_objects as go
 from dash.dependencies import Input, Output
+
 @callback(
     Output('wind-stats', 'children'),
     [Input('slider-year', 'value'),
@@ -15,8 +15,8 @@ def update_windrose(year, region):
 
         stats = html.Div(
             [
-                html.H2(f"{get_cardinal_direction(wind_direction)}", title="Direction cardinale moyenne sur 1 an", style={"font-weight": "bold"}),
-                html.H2(f"{wind_speed:.2f} m/s", title="Vitesse moyenne sur 1 an"),
+                html.H2(f"{get_cardinal_direction(wind_direction)}", title="Direction cardinale", style={"font-weight": "bold"}),
+                html.H2(f"{wind_speed:.2f} m/s", title="Vitesse moyenne"),
             ],
             style={
                 "display": "flex",
@@ -29,14 +29,13 @@ def update_windrose(year, region):
         )
 
     except Exception as e:
-        fig = go.Figure()
-        fig.add_annotation(text=str(e), showarrow=False)
         stats = html.Div([
             html.H4("Erreur"),
             html.P(str(e))
         ])
 
     return stats
+
 def get_cardinal_direction(degrees):
     directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
                   'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO']

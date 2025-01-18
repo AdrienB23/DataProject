@@ -1,4 +1,3 @@
-from src.utils.common import get_year_from_date
 from src.utils.get_data import get_cleaned_data
 import pandas as pd
 

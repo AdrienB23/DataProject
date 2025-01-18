@@ -1,7 +1,6 @@
 from dash import dcc, html, callback, Output, Input
 from src.utils.indicators_functions import temperature_min_max_year
 from src.utils.data_loader import df_cleaned
-
 def create_indicators():
     return html.Div(
         className="indicator-container",
@@ -89,4 +88,3 @@ def update_indicators(selected_year, selected_region):
     except Exception as e:
         print(f"Erreur: {str(e)}")
         return "Erreur", "Erreur"
-

@@ -1,7 +1,7 @@
 import json
 
 import pandas as pd
-from dash import dcc, html, callback, Output, Input
+from dash import html, callback, Output, Input
 import plotly.express as px
 
 from config import CONFIG
