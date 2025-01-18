@@ -1,11 +1,13 @@
 from dash import html
+from plotly.graph_objs import Figure
+
 from src.components.create_dropdown import create_dropdown
 from src.components.create_loading import create_loading
 from dash import Input, Output, callback
 from src.utils.graphs_functions import create_global_temperature
 from src.utils.data_loader import df_cleaned
 
-def create_temperature_layout():
+def create_temperature_layout() -> html.Div:
     """
     Generates a layout of average temperature in France
 
@@ -31,7 +33,7 @@ def create_temperature_layout():
         Input('temp-dropdown', 'value'),
     ]
 )
-def update_temp_graph(selected_temp):
+def update_temp_graph(selected_temp) -> Figure:
     """
     Updates the graph depending on the year selected.
     Parameters:

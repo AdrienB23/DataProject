@@ -2,7 +2,7 @@ from dash import html, dcc
 from src.utils.data_loader import df_cleaned
 from src.utils.graphs_functions import create_rainfall_graph
 
-def create_rainfall_layout():
+def create_rainfall_layout() -> html.Div:
     """
     Generates a layout of average yearly rainfall by region
 
